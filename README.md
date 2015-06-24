@@ -6,5 +6,5 @@ At present:
   p1 and p2 objects exist
   Clicking buttons changes things on the html page.
 To do:
-  Figure out how to add and remove <row>s and their contents on html-side, instead of just changing what's in a <p>.
+  Figure out how to add and remove rows and their contents on html-side, instead of just changing what's in a p.
   Everything else.
