@@ -37,7 +37,7 @@ var p2 = {
 function play1() {
 	console.log("Welcome to OpenBox Co-op v1! Test control!")
 	document.getElementById("narrationBox").innerHTML = "Welcome to OpenBox Co-op v1! \
-	You clicked the first button, which is known to work. \r \r Player \
+	You clicked the first button, which is known to work. <br> <br> Player \
 	one is " + p1.name + " and player two is " + p2.name + ".";
 }
 
