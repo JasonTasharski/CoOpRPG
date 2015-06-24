@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="styles.css">
+	<script src="scripts.js"></script>
+</head>
+<body>
+	<div class="container">
+		<h1 id="mainTitle">Everything Follows.</h1>
+		<div class="row">
+		  <div class="col-xs-4">
+		  	<button type="button" onclick="play1()">This one works!</button>
+		  </div>
+		  <div class="col-xs-4">
+		  	<button type="button" onclick="play2()">Test #2...</button>
+		  </div>
+		  <div class="col-xs 4">
+		  		<button type="button" onclick="play3()">Test #3...</button>
+		  </div>
+		</div>
+	</div>
+	<div class="container">
+		<h2 id="subTitle">Main narration under this</h2>
+		<p id="narrationBox">Main narration goes here; this should change when a working button is clicked.</p>
+		<div class="row">
+			<div class="col-xs-6">
+				<h3 id="p1Can">P1:</h3>
+				<p>Uh...</p>
+			</div>
+			<div class="col-xs-6">
+				<h3 id="p2Can">P2:</h3>
+				<p>Er...</p>
+			</div>
+		</div>
+	</div>
+	<!--<script>
+		var changeNarration 
+		changeNarration = document.getElementById("narrationBox");
+		function play3() {
+			console.log("Test #3!")
+			document.getElementById("narrationBox").innerHTML = "If you're seeing this, you got the error.";
+			changeNarration.innerHTML = "If you're seeing this, play3() works now and you don't know why.";
+		}
+	</script>-->
+</body>
+</html>
