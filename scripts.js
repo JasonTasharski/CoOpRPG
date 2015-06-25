@@ -36,6 +36,9 @@ var p2 = {
 	'murders': 0
 };
 
+// Below: play1() is no longer necessary, and play2() should become play(),
+// replacing play1() and play3() (play3() is in index.html).
+
 function play1() {
 	console.log("Welcome to OpenBox Co-op v1! Test control!")
 	document.getElementById("narrationBox").innerHTML = "Welcome to OpenBox Co-op v1! \
@@ -43,35 +46,47 @@ function play1() {
 	one is " + p1.name + " and player two is " + p2.name + ".";
 }
 
-// The above works fine, but will be repetitive in the long run.
+// Above: play1() is no longer necessary, and play2() should become play(),
+// replacing play1() and play3() (play3() is in index.html).
 
-// The following is a version of the above that uses fewer letters in the long run, but
-// produces the error 
-//	 "TypeError: Cannot set property 'innerHTML' of null"
-// when run.
+/*var changeNarration = function (){
+	document.getElementById("narrationBox");
+}*/
 
-var changeNarration;
-changeNarration = document.getElementById("narrationBox");
+// The stuff immediately above seems to be overridden by <script> in index.html
 
 function play2() {
-	console.log("Test #2!")
-	document.getElementById("narrationBox").innerHTML = "If you're seeing this, you got the error.";
-	changeNarration.innerHTML = "If you're seeing this, play2() works now and you won.";
+	changeNarration.innerHTML = "Welcome to OpenBox Co-op v1! \
+	You clicked the second button, which works now. <br> <br> Player \
+	one is " + p1.name + " and player two is " + p2.name + ".";
 }
 
-// The stuff between this comment and the one above it is for testing.
-
-function martialUp(changingPlayer){
-	if ((changingPlayer.statPoints>0)&&(changingPlayer.stats.Martial<5)){
-		changingPlayer.stats.Martial++; // player is p1 or p1
-		changingPlayer.statPoints--;
-		console.log(changingPlayer.name + " stats:");
-		console.log(changingPlayer.stats);
-		console.log("Points left: " + changingPlayer.statPoints);
-	} else if (changingPlayer.stats.Martial==5){
-		console.log("Martial cap reached. Put your remaining points elsewhere.")
-	} else	{
-		console.log("No points left.");
-		console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
+function martialChange(changingPlayer, bool){ // player is p1 or p1; bool is a Boolean
+	if (bool == true) {
+		if ((changingPlayer.statPoints>0)&&(changingPlayer.stats.Martial<5)){
+			changingPlayer.stats.Martial++; 
+			changingPlayer.statPoints--;
+			console.log(changingPlayer.name + " stats:");
+			console.log(changingPlayer.stats);
+			console.log("Points left: " + changingPlayer.statPoints);
+		} else if (changingPlayer.stats.Martial==5){
+			console.log("Martial cap reached. Put your remaining points elsewhere.")
+		} else	{
+			console.log("No points left.");
+			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
+		}
+	} else if (bool == false){
+		if (changingPlayer.stats.Martial>0){
+			changingPlayer.stats.Martial--; 
+			changingPlayer.statPoints++;
+			console.log(changingPlayer.name + " stats:");
+			console.log(changingPlayer.stats);
+			console.log("Points left: " + changingPlayer.statPoints);
+		} else if (changingPlayer.stats.Martial==0){
+			console.log("You can't reduce Martial below 0. Find points elsewhere.")
+		} else	{
+			console.log("Something impossible happened.");
+			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
+		}
 	}
 }
