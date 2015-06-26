@@ -1,6 +1,11 @@
+// window.addEventListener("DOMContentLoaded", function() {
 //Co-op, the text-based RPG.
 
-//var narBox = document.getElementById("narrationBox");
+console.log("testing controlFunction()...");
+var controlFunction = function(){
+	console.log("controlFunction() tested successfully");
+}
+controlFunction();
 
 var p1 = {
 	'name' : null,
@@ -71,7 +76,8 @@ function play1() {
 // 	one is " + p1.name + " and player two is " + p2.name + ".";
 // }
 
-var changeStat = function(changingPlayer, changingStat, bool){ // DOESN'T WORK
+// Below is in progress
+var changeStat = function(changingPlayer, changingStat, bool){
 	// player is p1 or p1; changingStat is...? bool is a Boolean
 	//var playerStats;
 	//playerStats = changingPlayer.stats;
@@ -133,150 +139,30 @@ var changeStat = function(changingPlayer, changingStat, bool){ // DOESN'T WORK
 		}
 	}
 }
+var changeEquip = function(changingPlayer, equip, equipCost, bool){
+	if ((bool == true) && (changingPlayer.equipmentPoints < equipCost)) {
+		console.log("You can't afford that - " + equip + " costs " + equipCost + ", and you\
+ only have " + changingPlayer.equipmentPoints " left to spend on equipment. You can get\
+ equipment points back by giving up equipment you already have");
+	} else if ((bool == true) && (changingPlayer.equipmentPoints >= equipCost)) {
+		//changingPlayer['equipment'][changingPlayer['equipment'].length] = equip;
+		changingPlayer['equipment'].push(equip);
+		changingPlayer.equipmentPoints -= equipCost;
+		console.log("Added " + equip);
+		console.log("Equipment is now " + toString(changingPlayer['equipment']));
+	} else {
+		console.log("Nothing added.");
+	}
+}
+// Above this is in progress.
 
-var changeMartial = function(changingPlayer, bool){ // player is p1 or p1; bool is a Boolean
-	if (bool == true) {
-		if ((changingPlayer.statPoints>0)&&(changingPlayer.stats.Martial<5)){
-			changingPlayer.stats.Martial++; 
-			changingPlayer.statPoints--;
-			console.log(changingPlayer.name + " stats:");
-			console.log(changingPlayer.stats);
-			console.log("Points left: " + changingPlayer.statPoints);
-		} else if (changingPlayer.stats.Martial==5){
-			console.log("Martial cap reached. Put your remaining points elsewhere.")
-		} else	{
-			console.log("No points left.");
-			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
-		}
-	} else if (bool == false){
-		if (changingPlayer.stats.Martial>0){
-			changingPlayer.stats.Martial--; 
-			changingPlayer.statPoints++;
-			console.log(changingPlayer.name + " stats:");
-			console.log(changingPlayer.stats);
-			console.log("Points left: " + changingPlayer.statPoints);
-		} else if (changingPlayer.stats.Martial==0){
-			console.log("You can't reduce Martial below 0. Find points elsewhere.")
-		} else	{
-			console.log("Something impossible happened.");
-			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
-		}
-	}
-}
-var changePhysical = function(changingPlayer, bool){ // player is p1 or p1; bool is a Boolean
-	if (bool == true) {
-		if ((changingPlayer.statPoints>0)&&(changingPlayer.stats.Physical<5)){
-			changingPlayer.stats.Physical++;
-			changingPlayer.statPoints--;
-			console.log(changingPlayer.name + " stats:");
-			console.log(changingPlayer.stats);
-			console.log("Points left: " + changingPlayer.statPoints);
-		} else if (changingPlayer.stats.Physical==5){
-			console.log("Physical cap reached. Put your remaining points elsewhere.")
-		} else	{
-			console.log("No points left.");
-			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
-		}
-	} else if (bool == false){
-		if (changingPlayer.stats.Physical>0){
-			changingPlayer.stats.Physical--; 
-			changingPlayer.statPoints++;
-			console.log(changingPlayer.name + " stats:");
-			console.log(changingPlayer.stats);
-			console.log("Points left: " + changingPlayer.statPoints);
-		} else if (changingPlayer.stats.Physical==0){
-			console.log("You can't reduce Physical below 0. Find points elsewhere.")
-		} else	{
-			console.log("Something impossible happened.");
-			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
-		}
-	}
-}
-var changeSocial = function(changingPlayer, bool){ // player is p1 or p1; bool is a Boolean
-	if (bool == true) {
-		if ((changingPlayer.statPoints>0)&&(changingPlayer.stats.Social<5)){
-			changingPlayer.stats.Social++; 
-			changingPlayer.statPoints--;
-			console.log(changingPlayer.name + " stats:");
-			console.log(changingPlayer.stats);
-			console.log("Points left: " + changingPlayer.statPoints);
-		} else if (changingPlayer.stats.Social==5){
-			console.log("Social cap reached. Put your remaining points elsewhere.")
-		} else	{
-			console.log("No points left.");
-			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
-		}
-	} else if (bool == false){
-		if (changingPlayer.stats.Social>0){
-			changingPlayer.stats.Social--; 
-			changingPlayer.statPoints++;
-			console.log(changingPlayer.name + " stats:");
-			console.log(changingPlayer.stats);
-			console.log("Points left: " + changingPlayer.statPoints);
-		} else if (changingPlayer.stats.Social==0){
-			console.log("You can't reduce Social below 0. Find points elsewhere.")
-		} else	{
-			console.log("Something impossible happened.");
-			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
-		}
-	}
-}
-var changeMagic = function(changingPlayer, bool){ // player is p1 or p1; bool is a Boolean
-	if (bool == true) {
-		if ((changingPlayer.statPoints>0)&&(changingPlayer.stats.Magic<5)){
-			changingPlayer.stats.Magic++; 
-			changingPlayer.statPoints--;
-			console.log(changingPlayer.name + " stats:");
-			console.log(changingPlayer.stats);
-			console.log("Points left: " + changingPlayer.statPoints);
-		} else if (changingPlayer.stats.Magic==5){
-			console.log("Magic cap reached. Put your remaining points elsewhere.")
-		} else	{
-			console.log("No points left.");
-			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
-		}
-	} else if (bool == false){
-		if (changingPlayer.stats.Magic>0){
-			changingPlayer.stats.Magic--; 
-			changingPlayer.statPoints++;
-			console.log(changingPlayer.name + " stats:");
-			console.log(changingPlayer.stats);
-			console.log("Points left: " + changingPlayer.statPoints);
-		} else if (changingPlayer.stats.Magic==0){
-			console.log("You can't reduce Magic below 0. Find points elsewhere.")
-		} else	{
-			console.log("Something impossible happened.");
-			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
-		}
-	}
-}
-var changeResilience = function(changingPlayer, bool){ // player is p1 or p1; bool is a Boolean
-	if (bool == true) {
-		if ((changingPlayer.statPoints>0)&&(changingPlayer.stats.Resilience<4)){
-			changingPlayer.stats.Resilience++; 
-			changingPlayer.statPoints--;
-			console.log(changingPlayer.name + " stats:");
-			console.log(changingPlayer.stats);
-			console.log("Points left: " + changingPlayer.statPoints);
-		} else if (changingPlayer.stats.Resilience==4){
-			console.log("Resilience cap reached (it's 4 for balance reasons). \
-				Put your remaining points elsewhere, scrub.")
-		} else	{
-			console.log("No points left.");
-			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
-		}
-	} else if (bool == false){
-		if (changingPlayer.stats.Resilience>2){
-			changingPlayer.stats.Resilience--; 
-			changingPlayer.statPoints++;
-			console.log(changingPlayer.name + " stats:");
-			console.log(changingPlayer.stats);
-			console.log("Points left: " + changingPlayer.statPoints);
-		} else if (changingPlayer.stats.Resilience==0){
-			console.log("You can't reduce Resilience below 2 (for balance reasons). Find points elsewhere, scrub.")
-		} else	{
-			console.log("Something impossible happened.");
-			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
-		}
-	}
-}
+// Make it so there's one button: "Display Player Information".
+// id="playerInfo" is a container including two columns, each with one player's information.
+// The effect of the button is to affect playerInfo, making it hide or display depending
+// on whether it's already displayed or not. Like:
+// if (displayed==false){playerInfo.style.display = "block";}
+// else if (displayed==true){playerInfo.style.display = "none";}
+
+
+
+// })// This line closes the event listener for loading the DOM.
