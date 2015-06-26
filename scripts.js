@@ -3,7 +3,7 @@
 //var narBox = document.getElementById("narrationBox");
 
 var p1 = {
-	'name' : "You",
+	'name' : null,
 	'age' : 16, // accepted range 14-90
 	'pronoun' : 2, // 0 is "she", 1 is "he", 2 is "they"
 	'stats' : {
@@ -19,7 +19,7 @@ var p1 = {
 	'murders': 0
 };
 var p2 = {
-	'name' : "Friend",
+	'name' : null,
 	'age' : 16, // accepted range 14-90
 	'pronoun' : 2, // 0 is "she", 1 is "he", 2 is "they"
 	'stats' : {
@@ -34,6 +34,17 @@ var p2 = {
 	'equipmentPoints': 10,
 	'murders': 0
 };
+
+var setName = function(player, newName){
+	player.name = newName;
+	if (player === p1) {
+		document.getElementById("p1Can").innerText = player.name + ":";
+	} else if (player === p2) {
+		document.getElementById("p2Can").innerText = player.name + ":";
+	} else {
+		console.log("Sumthin fuckd up.");
+	}
+}
 
 // Below: play1() is no longer necessary, and play2() should become play(),
 // replacing play1() and play3() (play3() is in index.html).
@@ -60,7 +71,70 @@ function play1() {
 // 	one is " + p1.name + " and player two is " + p2.name + ".";
 // }
 
-function martialChange(changingPlayer, bool){ // player is p1 or p1; bool is a Boolean
+var changeStat = function(changingPlayer, changingStat, bool){ // DOESN'T WORK
+	// player is p1 or p1; changingStat is...? bool is a Boolean
+	//var playerStats;
+	//playerStats = changingPlayer.stats;
+	//var thing = playerStats[changingStat];
+
+	if ((changingStat === "Resilience")&&(bool == true)) {
+		if ((changingPlayer.statPoints>0)&&(changingPlayer.stats.Resilience<4)){
+			changingPlayer.stats.Resilience++; 
+			changingPlayer.statPoints--;
+			console.log(changingPlayer.name + " stats:");
+			console.log(changingPlayer.stats);
+			console.log("Points left: " + changingPlayer.statPoints);
+		} else if (changingPlayer.stats.Resilience==4){
+			console.log("Resilience cap reached (it's 4 for balance reasons). \
+ Put your remaining points elsewhere, scrub.")
+		} else	{
+			console.log("No points left.");
+			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
+		}
+	} else if ((changingStat === "Resilience")(bool == false)){
+		if (changingPlayer.stats.Resilience>2){
+			changingPlayer.stats.Resilience--; 
+			changingPlayer.statPoints++;
+			console.log(changingPlayer.name + " stats:");
+			console.log(changingPlayer.stats);
+			console.log("Points left: " + changingPlayer.statPoints);
+		} else if (changingPlayer.stats.Resilience==0){
+			console.log("You can't reduce Resilience below 2 (for balance reasons).\
+ Find points elsewhere, scrub.")
+		} else	{
+			console.log("Something impossible happened.");
+			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
+		}
+	} else if (bool == true) {
+		if ((changingPlayer.statPoints>0)&&(changingPlayer.stats[changingStat]<5)){
+			changingPlayer.stats[changingStat]++; 
+			changingPlayer.statPoints--;
+			console.log(changingPlayer.name + " stats:");
+			console.log(changingPlayer.stats);
+			console.log("Points left: " + changingPlayer.statPoints);
+		} else if (changingPlayer.stats[changingStat]==5){
+			console.log("Stat cap reached. Put your remaining points elsewhere.")
+		} else	{
+			console.log("No points left.");
+			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
+		}
+	} else if (bool == false) {
+		if (changingPlayer.stats[changingStat]>0){
+			changingPlayer.stats[changingStat]--; 
+			changingPlayer.statPoints++;
+			console.log(changingPlayer.name + " stats:");
+			console.log(changingPlayer.stats);
+			console.log("Points left: " + changingPlayer.statPoints);
+		} else if (changingPlayer.stats[changingStat]==0){
+			console.log("You can't reduce a stat below 0. Find points elsewhere.")
+		} else	{
+			console.log("Something impossible happened.");
+			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
+		}
+	}
+}
+
+var changeMartial = function(changingPlayer, bool){ // player is p1 or p1; bool is a Boolean
 	if (bool == true) {
 		if ((changingPlayer.statPoints>0)&&(changingPlayer.stats.Martial<5)){
 			changingPlayer.stats.Martial++; 
@@ -89,7 +163,7 @@ function martialChange(changingPlayer, bool){ // player is p1 or p1; bool is a B
 		}
 	}
 }
-function physicalChange(changingPlayer, bool){ // player is p1 or p1; bool is a Boolean
+var changePhysical = function(changingPlayer, bool){ // player is p1 or p1; bool is a Boolean
 	if (bool == true) {
 		if ((changingPlayer.statPoints>0)&&(changingPlayer.stats.Physical<5)){
 			changingPlayer.stats.Physical++;
@@ -118,7 +192,7 @@ function physicalChange(changingPlayer, bool){ // player is p1 or p1; bool is a 
 		}
 	}
 }
-function socialChange(changingPlayer, bool){ // player is p1 or p1; bool is a Boolean
+var changeSocial = function(changingPlayer, bool){ // player is p1 or p1; bool is a Boolean
 	if (bool == true) {
 		if ((changingPlayer.statPoints>0)&&(changingPlayer.stats.Social<5)){
 			changingPlayer.stats.Social++; 
@@ -147,7 +221,7 @@ function socialChange(changingPlayer, bool){ // player is p1 or p1; bool is a Bo
 		}
 	}
 }
-function magicChange(changingPlayer, bool){ // player is p1 or p1; bool is a Boolean
+var changeMagic = function(changingPlayer, bool){ // player is p1 or p1; bool is a Boolean
 	if (bool == true) {
 		if ((changingPlayer.statPoints>0)&&(changingPlayer.stats.Magic<5)){
 			changingPlayer.stats.Magic++; 
@@ -176,7 +250,7 @@ function magicChange(changingPlayer, bool){ // player is p1 or p1; bool is a Boo
 		}
 	}
 }
-function resilienceChange(changingPlayer, bool){ // player is p1 or p1; bool is a Boolean
+var changeResilience = function(changingPlayer, bool){ // player is p1 or p1; bool is a Boolean
 	if (bool == true) {
 		if ((changingPlayer.statPoints>0)&&(changingPlayer.stats.Resilience<4)){
 			changingPlayer.stats.Resilience++; 
