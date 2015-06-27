@@ -1,4 +1,4 @@
-// window.addEventListener("DOMContentLoaded", function() {
+// window.onload = function() {
 //Co-op, the text-based RPG.
 
 console.log("testing controlFunction()...");
@@ -7,10 +7,33 @@ var controlFunction = function(){
 }
 controlFunction();
 
+document.querySelector("#p1Info").style.visibility = "hidden";
+var p1InfoVisible = false;
+document.getElementById("p2Info").style.visibility = "hidden";
+var p2InfoVisible = false;
+document.querySelector("#p1Can").addEventListener("click", function(){
+	if (p1InfoVisible === false) {
+		document.querySelector("#p1Info").style.visibility = "visible";
+		p1InfoVisible = true;
+	} else if (p1InfoVisible === true) {
+		document.querySelector("#p1Info").style.visibility = "hidden";
+		p1InfoVisible = false;
+	}
+})
+document.getElementById("p2Can").addEventListener("click", function(){
+	if (p2InfoVisible === false) {
+		document.getElementById("p2Info").style.visibility = "visible";
+		p2InfoVisible = true;
+	} else if (p2InfoVisible === true) {
+		document.getElementById("p2Info").style.visibility = "hidden";
+		p2InfoVisible = false;
+	}
+})
+
 var p1 = {
-	'name' : null,
+	'name' : "player one",
 	'age' : 16, // accepted range 14-90
-	'pronoun' : 2, // 0 is "she", 1 is "he", 2 is "they"
+	'pronoun' : "they", // accept "he" and "she"
 	'stats' : {
 		'Martial' : 0,
 		'Physical' : 0,
@@ -24,9 +47,9 @@ var p1 = {
 	'murders': 0
 };
 var p2 = {
-	'name' : null,
+	'name' : "player two",
 	'age' : 16, // accepted range 14-90
-	'pronoun' : 2, // 0 is "she", 1 is "he", 2 is "they"
+	'pronoun' : "they", // accept "he" and "she"
 	'stats' : {
 		'Martial' : 0,
 		'Physical' : 0,
@@ -47,36 +70,54 @@ var setName = function(player, newName){
 	} else if (player === p2) {
 		document.getElementById("p2Can").innerText = player.name + ":";
 	} else {
-		console.log("Sumthin fuckd up.");
+		console.log("SetName broke; no real player identified.");
 	}
+	refreshPlayerInfo();
 }
 
-// Below: play1() is no longer necessary, and play2() should become play(),
-// replacing play1() and play3() (play3() is in index.html).
+var setPronoun = function(player, newPronoun){ // newPronoun is he/she/they
+	if ((newPronoun === "she") || (newPronoun === "he") || (newPronoun === "they")){
+		player.pronoun = newPronoun;
+	} else {
+		console.log("Pronoun input not accepted. Right now, \
+ we only support 'he,' 'she,' and 'they.'");
+	}
+	refreshPlayerInfo();
+}
 
-function play1() {
+var setAge = function(player, newAge){
+	if ((newAge >= 13) && (newAge < 60)) {
+		player.age = Math.round(newAge);
+		console.log("Age accepted. " + player.name + "'s age is now " + player.age + ".");
+	} else if ((newAge > 59) && (newAge <= 99)) {
+		console.log("Age accepted. Be aware, old age may limit your options.");
+		player.age = Math.round(newAge);
+	} else if ((newAge > 99) || (newAge < 13)) {
+		console.log("Only ages between 13 and 99 accepted.");
+	} else {
+		console.log("SetAge broke; non-number input.");
+	}
+	refreshPlayerInfo();
+}
+
+var refreshPlayerInfo = function(){ // not DRY yet
+document.querySelector("#p1Info").innerHTML = p1.name + "<br>Age: \
+" + p1.age + "<br>Pronoun: " + p1.pronoun + "<br><tab>Martial: \
+" + p1.stats.Martial + "<br><tab>Physical: " + p1.stats.Physical + "<br><tab>Social: \
+" + p1.stats.Social + "<br><tab>Magic: " + p1.stats.Magic;
+document.querySelector("#p2Info").innerHTML = p2.name + "<br>Age: \
+" + p2.age + "<br>Pronoun: " + p2.pronoun + "<br><tab>Martial: \
+" + p2.stats.Martial + "<br><tab>Physical: " + p2.stats.Physical + "<br><tab>Social: \
+" + p2.stats.Social + "<br><tab>Magic: " + p2.stats.Magic;
+}
+
+function play() {
 	console.log("Welcome to OpenBox Co-op v1! Test control!")
 	document.getElementById("narrationBox").innerHTML = "Welcome to OpenBox Co-op v1! \
 	You clicked the first button, which is known to work. <br> <br> Player \
 	one is " + p1.name + " and player two is " + p2.name + ".";
 }
 
-// Above: play1() is no longer necessary, and play2() should become play(),
-// replacing play1() and play3() (play3() is in index.html).
-
-
-
-// The stuff immediately above seems to be overridden by <script> in index.html
-
-//function play2() {
-	// document.getElementById("narrationBox").innerHTML = "Error.";
-// var narBox = document.getElementById("narrationBox");
-// 	narBox.innerHTML = "Welcome to OpenBox Co-op v1! \
-// 	You clicked the second button, which works now. <br> <br> Player \
-// 	one is " + p1.name + " and player two is " + p2.name + ".";
-// }
-
-// Below is in progress
 var changeStat = function(changingPlayer, changingStat, bool){
 	// player is p1 or p1; changingStat is...? bool is a Boolean
 	//var playerStats;
@@ -138,11 +179,13 @@ var changeStat = function(changingPlayer, changingStat, bool){
 			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
 		}
 	}
+	refreshPlayerInfo();
 }
+// Below is in progress
 var changeEquip = function(changingPlayer, equip, equipCost, bool){
 	if ((bool == true) && (changingPlayer.equipmentPoints < equipCost)) {
 		console.log("You can't afford that - " + equip + " costs " + equipCost + ", and you\
- only have " + changingPlayer.equipmentPoints " left to spend on equipment. You can get\
+ only have " + changingPlayer.equipmentPoints + " left to spend on equipment. You can get\
  equipment points back by giving up equipment you already have");
 	} else if ((bool == true) && (changingPlayer.equipmentPoints >= equipCost)) {
 		//changingPlayer['equipment'][changingPlayer['equipment'].length] = equip;
@@ -153,6 +196,7 @@ var changeEquip = function(changingPlayer, equip, equipCost, bool){
 	} else {
 		console.log("Nothing added.");
 	}
+	refreshPlayerInfo();
 }
 // Above this is in progress.
 
@@ -165,4 +209,4 @@ var changeEquip = function(changingPlayer, equip, equipCost, bool){
 
 
 
-// })// This line closes the event listener for loading the DOM.
+// } // This line closes the event listener for loading the DOM.
