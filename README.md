@@ -8,27 +8,27 @@ At present:
   p1 and p2 objects exist;;
   Clicking buttons changes things on the html page;
   The play() error has been resolved;
-  A function exists that can change exactly one stat at a time.
-  A function sets player names.
+  One function changes any stat by increment of 1
+  Functions set player names., age, and pronouns
   A function is in progress to alter equipment
+  The function that alters equipment works
+  Display/hide player information works
 To do:
-  Make the function that alters equipment work
-  Make a setAge() function
-  Figure out the null error that I showed Chhun
-  Implement a way of displaying/hiding player information
-  	(button in header?)
+  Make equipment objects?
+  Implement multiple states:
+    Play? state (both players click PLAY, goes to...)
+    Make Characters state (interface with buttons to:
+      Increase/reduce stats
+      Get/drop equipment (off a list)
+      Set name
+      Set age
+      Set adjectives?
+        One positive description, one negative?
+      Set social class/role)
+    Game states (actual gameplay)
   Implement icons?
+  Header?
   Implement social class/role
   	(Determines what NPCs expect of you)
   	(Dependent on stats, equipment, age)
-  Implement multiple states:
-  	Play? state (both players click PLAY, goes to...)
-  	Make Characters state (interface to:
-  		Increase/reduce stats
-  		Get/drop equipment (off a list)
-  		Set name
-  		Set age
-  		Set adjectives?
-  			One positive description, one negative?
-  		Set social class/role)
-  	Game states (actual gameplay)
+

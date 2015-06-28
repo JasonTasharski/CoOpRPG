@@ -101,11 +101,11 @@ var setAge = function(player, newAge){
 }
 
 var refreshPlayerInfo = function(){ // not DRY yet
-document.querySelector("#p1Info").innerHTML = p1.name + "<br>Age: \
+	document.querySelector("#p1Info").innerHTML = p1.name + "<br>Age: \
 " + p1.age + "<br>Pronoun: " + p1.pronoun + "<br><tab>Martial: \
 " + p1.stats.Martial + "<br><tab>Physical: " + p1.stats.Physical + "<br><tab>Social: \
 " + p1.stats.Social + "<br><tab>Magic: " + p1.stats.Magic;
-document.querySelector("#p2Info").innerHTML = p2.name + "<br>Age: \
+	document.querySelector("#p2Info").innerHTML = p2.name + "<br>Age: \
 " + p2.age + "<br>Pronoun: " + p2.pronoun + "<br><tab>Martial: \
 " + p2.stats.Martial + "<br><tab>Physical: " + p2.stats.Physical + "<br><tab>Social: \
 " + p2.stats.Social + "<br><tab>Magic: " + p2.stats.Magic;
@@ -124,28 +124,28 @@ var changeStat = function(changingPlayer, changingStat, bool){
 	//playerStats = changingPlayer.stats;
 	//var thing = playerStats[changingStat];
 
-	if ((changingStat === "Resilience")&&(bool == true)) {
-		if ((changingPlayer.statPoints>0)&&(changingPlayer.stats.Resilience<4)){
+	if ((changingStat === "Resilience") && (bool == true)) {
+		if ((changingPlayer.statPoints > 0) && (changingPlayer.stats.Resilience < 4)){
 			changingPlayer.stats.Resilience++; 
 			changingPlayer.statPoints--;
 			console.log(changingPlayer.name + " stats:");
 			console.log(changingPlayer.stats);
 			console.log("Points left: " + changingPlayer.statPoints);
-		} else if (changingPlayer.stats.Resilience==4){
+		} else if (changingPlayer.stats.Resilience == 4){
 			console.log("Resilience cap reached (it's 4 for balance reasons). \
  Put your remaining points elsewhere, scrub.")
 		} else	{
 			console.log("No points left.");
 			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
 		}
-	} else if ((changingStat === "Resilience")(bool == false)){
-		if (changingPlayer.stats.Resilience>2){
+	} else if ((changingStat === "Resilience") && (bool == false)){
+		if (changingPlayer.stats.Resilience > 2){
 			changingPlayer.stats.Resilience--; 
 			changingPlayer.statPoints++;
 			console.log(changingPlayer.name + " stats:");
 			console.log(changingPlayer.stats);
 			console.log("Points left: " + changingPlayer.statPoints);
-		} else if (changingPlayer.stats.Resilience==0){
+		} else if (changingPlayer.stats.Resilience == 0){
 			console.log("You can't reduce Resilience below 2 (for balance reasons).\
  Find points elsewhere, scrub.")
 		} else	{
@@ -153,26 +153,26 @@ var changeStat = function(changingPlayer, changingStat, bool){
 			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
 		}
 	} else if (bool == true) {
-		if ((changingPlayer.statPoints>0)&&(changingPlayer.stats[changingStat]<5)){
+		if ((changingPlayer.statPoints > 0) && (changingPlayer.stats[changingStat] < 5)){
 			changingPlayer.stats[changingStat]++; 
 			changingPlayer.statPoints--;
 			console.log(changingPlayer.name + " stats:");
 			console.log(changingPlayer.stats);
 			console.log("Points left: " + changingPlayer.statPoints);
-		} else if (changingPlayer.stats[changingStat]==5){
+		} else if (changingPlayer.stats[changingStat] == 5){
 			console.log("Stat cap reached. Put your remaining points elsewhere.")
 		} else	{
 			console.log("No points left.");
 			console.log(changingPlayer.name + " stats: " + changingPlayer.stats);
 		}
 	} else if (bool == false) {
-		if (changingPlayer.stats[changingStat]>0){
+		if (changingPlayer.stats[changingStat] > 0){
 			changingPlayer.stats[changingStat]--; 
 			changingPlayer.statPoints++;
 			console.log(changingPlayer.name + " stats:");
 			console.log(changingPlayer.stats);
 			console.log("Points left: " + changingPlayer.statPoints);
-		} else if (changingPlayer.stats[changingStat]==0){
+		} else if (changingPlayer.stats[changingStat] == 0){
 			console.log("You can't reduce a stat below 0. Find points elsewhere.")
 		} else	{
 			console.log("Something impossible happened.");
@@ -181,32 +181,23 @@ var changeStat = function(changingPlayer, changingStat, bool){
 	}
 	refreshPlayerInfo();
 }
-// Below is in progress
 var changeEquip = function(changingPlayer, equip, equipCost, bool){
 	if ((bool == true) && (changingPlayer.equipmentPoints < equipCost)) {
 		console.log("You can't afford that - " + equip + " costs " + equipCost + ", and you\
  only have " + changingPlayer.equipmentPoints + " left to spend on equipment. You can get\
- equipment points back by giving up equipment you already have");
+ equipment points back by giving up equipment you already have.");
 	} else if ((bool == true) && (changingPlayer.equipmentPoints >= equipCost)) {
-		//changingPlayer['equipment'][changingPlayer['equipment'].length] = equip;
 		changingPlayer['equipment'].push(equip);
 		changingPlayer.equipmentPoints -= equipCost;
 		console.log("Added " + equip);
-		console.log("Equipment is now " + toString(changingPlayer['equipment']));
+	} else if ((bool == false) && (changingPlayer['equipment'].indexOf(equip) != undefined)){
+		changingPlayer['equipment'].splice(changingPlayer['equipment'].indexOf(equip), 1);
+		changingPlayer.equipmentPoints += equipCost;
 	} else {
-		console.log("Nothing added.");
+		console.log("Nothing added or removed.");
 	}
+	console.log("Equipment: " + changingPlayer['equipment'].join(", "));
 	refreshPlayerInfo();
 }
-// Above this is in progress.
-
-// Make it so there's one button: "Display Player Information".
-// id="playerInfo" is a container including two columns, each with one player's information.
-// The effect of the button is to affect playerInfo, making it hide or display depending
-// on whether it's already displayed or not. Like:
-// if (displayed==false){playerInfo.style.display = "block";}
-// else if (displayed==true){playerInfo.style.display = "none";}
-
-
 
 // } // This line closes the event listener for loading the DOM.
